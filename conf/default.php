@@ -2,8 +2,7 @@
 /**
  * Options for the searchstats plugin
  */
-global $conf;
 
-$conf['savefolder']    = $conf['indexdir'].'/searchstats';   // sets folder where search words are stored
+$conf['searchstats_savefolder']    = 'data/index/searchstats';   // sets folder where search words are stored
 
 ?>

@@ -29,33 +29,12 @@ class action_plugin_searchstats extends DokuWiki_Action_Plugin {
 		}
 
 		function getSearchWordArray($amount = false) {
-			$wordArray = array();
-			$dir = $this->_getSaveFolder();
-			if ($dh = opendir($dir)) {
-				while (($file = readdir($dh)) !== false) {
-					if(is_file($dir.'/'.$file) && strstr($file, 'idx')) {
-						$handle = @fopen($dir.'/'.$file, "r");
-						if ($handle) {
-							while (!feof($handle)) {
-								$lines[] = rtrim(fgets($handle, 4096));
-							}
-							fclose($handle);
-						}
-						foreach($lines as $line) {
-							$lineArray = explode(';', $line);
-							if($lineArray[0] != '') {
-								$wordArray[$lineArray[0]] = $lineArray[1];
-							}
-						}
-					}
-				}
+			$helper = plugin_load('helper', 'searchstats');
+			if(is_object($helper)) {
+			 $wordArray = $helper->getSearchWordArray($amount);
+			 return $wordArray;
 			}
-			closedir($dh);
-			arsort($wordArray);
-			if($amount && is_numeric($amount)) {
-				$wordArray = array_slice($wordArray, 0, $amount);
-			}
-			return $wordArray;
+			return array();
 		}
 
 		/**
@@ -78,7 +57,8 @@ class action_plugin_searchstats extends DokuWiki_Action_Plugin {
 		}
 
 		function _getSaveFolder() {
-			return $this->getConf('savefolder');
+			$helper = plugin_load('helper', 'searchstats');
+			return $helper->_getSaveFolder();
 		}
 
 		function _checkSaveFolder() {

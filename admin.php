@@ -34,7 +34,7 @@ class admin_plugin_searchstats extends DokuWiki_Admin_Plugin {
 	
 	//Render html output for the plugin.
 	function html() {
-		if(is_array($this->wordArray)) {
+		if(is_array($this->wordArray) && count($this->wordArray) > 0) {
 			ptln('<h1>'.$this->getLang('menu').'</h1>');
 			//print out bar chart
 			ptln('<br />');
@@ -54,6 +54,9 @@ class admin_plugin_searchstats extends DokuWiki_Admin_Plugin {
 				ptln('</tr>');
 			}
 			ptln('</table>');
+		}
+		else {
+		  ptln('<h1>'.$this->getLang('nosearchwords').'</h1>');
 		}
 	}
 

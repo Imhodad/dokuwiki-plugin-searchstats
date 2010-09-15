@@ -29,6 +29,12 @@ class helper_plugin_searchstats extends DokuWiki_Plugin {
 									'number of words' => 'integer'),
 							'return' => array('words' => 'array'),
 							);
+			$result[] = array(
+							'name'	 => '_getSaveFolder',
+							'desc'	 => 'returns folder where data is saved',
+							'params' => array(),
+							'return' => array('savefolder' => 'string'),
+							);
 			return $result;
 	}
 
@@ -63,7 +69,7 @@ class helper_plugin_searchstats extends DokuWiki_Plugin {
 	}
 
 	function _getSaveFolder() {
-		return $this->getConf('savefolder');
+		return $this->getConf('searchstats_savefolder');
 	}
 
 }
