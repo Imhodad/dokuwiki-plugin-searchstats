@@ -71,7 +71,18 @@ class admin_plugin_searchstats extends DokuWiki_Admin_Plugin {
 			$top = 0;
 			$i = 0;
 			foreach($wordArray as $word => $count) {
-				if($i == 0) $top = bcpow(10, (int) strlen((string) $count));;
+				if($i == 0) {
+					if(function_exists('bcpow')) {
+						$top = bcpow(10, (int) strlen((string) $count));
+					}
+					else {
+						$strLen = (int) strlen((string) $count);
+						$top = 1;
+						while($strLen-- >= 1) {
+							$top = $top * 10;
+						}
+					}
+				}
 				$i++;
 				$chxl .= "|".$word;
 				$percentage = $count/$top*100;

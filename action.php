@@ -43,7 +43,12 @@ class action_plugin_searchstats extends DokuWiki_Action_Plugin {
 		 * @author		 Michael Schuh <mike.schuh@gmx.at>
 		 */
 		function _getSearchWords(&$event, $param) {
-			$q = ft_queryParser($event->data['query']);
+			if(function_exists('idx_get_indexer')) {
+				$q = ft_queryParser(idx_get_indexer(),$event->data['query']);
+			}
+			else {
+				$q = ft_queryParser($event->data['query']);
+			}
 			if(is_array($q['highlight'])) {
 				$this->_checkSaveFolder();
 				foreach($q['words'] as $saveWord) {
