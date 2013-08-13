@@ -51,7 +51,19 @@ class action_plugin_searchstats extends DokuWiki_Action_Plugin {
 			}
 			if(is_array($q['highlight'])) {
 				$this->_checkSaveFolder();
-				foreach($q['words'] as $saveWord) {
+				
+				# these if-else statement deals with asian phrases, 
+				# which are not separated with space.
+				# They are stored in $q['words'] at first.
+				if(preg_match('/'.IDX_ASIAN.'/u',$event->data['query'])) {
+					$words = $q['phrases'];
+				}
+				else {
+					$words = $q['words'];
+				}
+				
+				# foreach($q['words'] as $saveWord) {
+				foreach($words as $saveWord) {
 					if(strlen(trim($saveWord)) > 0) {
 						//remove ;
 						$saveWord = str_replace(';', '', $saveWord);
