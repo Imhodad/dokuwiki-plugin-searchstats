@@ -23,7 +23,7 @@ class action_plugin_searchstats extends DokuWiki_Action_Plugin {
               );
     }
 
-		function register(&$controller) {
+		function register(Doku_Event_Handler $controller) {
 				$controller->register_hook('SEARCH_QUERY_FULLPAGE', 'BEFORE', $this,
 																	 '_getSearchWords');
 		}
