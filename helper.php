@@ -59,8 +59,8 @@ class helper_plugin_searchstats extends DokuWiki_Plugin {
 					}
 				}
 			}
+			closedir($dh);
 		}
-		closedir($dh);
 		arsort($wordArray);
 		if($amount && is_numeric($amount)) {
 			$wordArray = array_slice($wordArray, 0, $amount);
